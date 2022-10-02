@@ -1,17 +1,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Container } from 'react-bootstrap';
-import './App.css';
+import { Container } from "react-bootstrap";
+import "./App.css";
 import Formulario from "./components/Formulario";
-import Lista from "./components/Lista";
 
 function App() {
   return (
-   <Container>
- <h1 className="text-center">Administrar colores</h1>
- <br />
- <Formulario></Formulario>
-
-   </Container>
+    <Container>
+      <h1 className="text-center">Administrar colores</h1>
+      <br />
+      <Formulario></Formulario>
+    </Container>
   );
 }
 
