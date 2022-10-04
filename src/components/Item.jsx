@@ -1,8 +1,9 @@
 import { Button, Card, Col,  Row } from "react-bootstrap";
 
 const Item = (props) => {
+  let color = props.nombreColor
   return (
-  
+ 
     <Card className="w-25">
       <Card.Body className="my-3 ">
         <Row>
@@ -12,7 +13,7 @@ const Item = (props) => {
             {props.nombreColor}
           </Col>
           <Col lg={12} className="d-flex justify-content-center">
-            <Card className="color"></Card>
+            <Card className="color" style={{background: color}}></Card>
           </Col>
           
           <Col lg={12} className="d-flex justify-content-end mt-5">

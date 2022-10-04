@@ -37,7 +37,7 @@ const Formulario = () => {
       <Form onSubmit={handleSubmit} className="mt-5">
         <Row>
           <Col lg={4} className='d-flex justify-content-center'>
-            <Card className="color"></Card>
+            <Card className="color" style={{background: color}} ></Card>
           </Col>
 
           <Col lg={8}>
