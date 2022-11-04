@@ -7,7 +7,7 @@ const Item = (props) => {
   
   const borrarColor = () => {
     Swal.fire({
-      title: "Esta seguro de eliminar este producto?",
+      title: "Esta seguro de eliminar este color?",
       text: "No se puede revertir este paso!",
       icon: "warning",
       showCancelButton: true,
@@ -41,8 +41,7 @@ const Item = (props) => {
     <Card className="w-25">
       <Card.Body className="my-3 ">
         <Row>
-          {/* {props.nombreColor} */}
-          {/* onClick={()=>props.borrarColor(props.nombreColor)} */}
+         
           <Col lg={12} className="fs-4 mb-5">
             {props.nombreColor}
           </Col>
@@ -51,7 +50,6 @@ const Item = (props) => {
           </Col>
           
           <Col lg={12} className="d-flex justify-content-end mt-5">
-            {/* siempre para agregar funcion con parametro por props se debe agregar funcion en forma de flecha */}
             <Button variant="warning" onClick={borrarColor}>Borrar</Button>
           </Col>
         </Row>

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 const Formulario = () => {
   const [color, setColor] = useState([]);
-
+console.log(color)
   useEffect(() => {
     consultarApi().then((respuesta) => {
       setColor(respuesta);
@@ -14,7 +14,7 @@ const Formulario = () => {
   }, []);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      nombreTarea: "",
+      nombreColor: "",
     },
   });
   // const navegacion = useNavigate();
@@ -26,15 +26,15 @@ const Formulario = () => {
           setColor(respuesta);
         });
         Swal.fire(
-          "Producto creado",
-          "El producto a sido creado correctamente",
+          "Color creado",
+          "El color a sido creado correctamente",
           "success"
         );
         reset();
       } else {
         Swal.fire("Ocurrio un error", "Vuelva a intentarlo más tarde", "error");
       }
-      // window.location.reload();
+     
     });
   };
 
@@ -43,7 +43,7 @@ const Formulario = () => {
       <Form onSubmit={handleSubmit(onSubmit)} className="mt-5">
         <Row>
           <Col lg={4} className="d-flex justify-content-center">
-            <Card className="color" style={{ background: color }}></Card>
+            <Card className="color" style={{ background: color.nombreColor }}></Card>
           </Col>
 
           <Col lg={8}>
