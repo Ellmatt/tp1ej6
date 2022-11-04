@@ -1,53 +1,68 @@
 import Lista from "./Lista";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
-
+import { consultarApi, crearColorApi } from "../helpers/queris";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 const Formulario = () => {
-  //     // aqui va los datos del ls
-  const coloresLS= JSON.parse(localStorage.getItem('arregloColorKey')) || []
+  const [color, setColor] = useState([]);
 
-  // // aqui va el state
-  const [color, setColor] = useState("");
-  const [arregloColor, setArregloColor] = useState(coloresLS);
+  useEffect(() => {
+    consultarApi().then((respuesta) => {
+      setColor(respuesta);
+    });
+  }, []);
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      nombreTarea: "",
+    },
+  });
+  // const navegacion = useNavigate();
 
-  // ciclo de vida
-  useEffect(()=>{
-    // el codigo asi escrito solo sirve para el montaje y desmontaje
-   // console.log('prueba de ciclo de vida del componente')
-    // guardar en Ls
-    localStorage.setItem('arregloColorKey', JSON.stringify(arregloColor))
-  }, [arregloColor])
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // no se puede usar el push con el state
-    // los 3 puntos son el operador spred
-    setArregloColor([...arregloColor, color]);
-    // limpiar el imput
-    setColor('');
+  const onSubmit = (datos) => {
+    crearColorApi(datos).then((respuesta) => {
+      if (respuesta.status === 201) {
+        consultarApi().then((respuesta) => {
+          setColor(respuesta);
+        });
+        Swal.fire(
+          "Producto creado",
+          "El producto a sido creado correctamente",
+          "success"
+        );
+        reset();
+      } else {
+        Swal.fire("Ocurrio un error", "Vuelva a intentarlo más tarde", "error");
+      }
+      // window.location.reload();
+    });
   };
-  const borrarColor = (nombre)=>{
-    let arregloModificado = arregloColor.filter((item)=>(item !== nombre))
-    // actualizo el state
-    setArregloColor(arregloModificado)
-}
 
   return (
     <Card>
-      <Form onSubmit={handleSubmit} className="mt-5">
+      <Form onSubmit={handleSubmit(onSubmit)} className="mt-5">
         <Row>
-          <Col lg={4} className='d-flex justify-content-center'>
-            <Card className="color" style={{background: color}} ></Card>
+          <Col lg={4} className="d-flex justify-content-center">
+            <Card className="color" style={{ background: color }}></Card>
           </Col>
 
           <Col lg={8}>
             <Form.Group className="d-flex my-4 me-5 ">
-              {/* <Card className="color "></Card> */}
+            
               <Form.Control
                 type="text"
                 placeholder="Ingrese un Color"
-                onChange={(e)=>setColor(e.target.value)}
-                value={color}
+                {...register("nombreColor", {
+                  required: "Este dato es obligatorio",
+                  minLength: {
+                    value: 2,
+                    message: "Debe ingresar como minimo 2 caracteres",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Debe ingresar como maximo 20 caracteres",
+                  },
+                })}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -59,9 +74,8 @@ const Formulario = () => {
           </Col>
         </Row>
       </Form>
-      
-      <Lista arregloColor={arregloColor} borrarColor={borrarColor}></Lista>
-      
+
+      <Lista color={color} setColor={setColor}></Lista>
     </Card>
   );
 };

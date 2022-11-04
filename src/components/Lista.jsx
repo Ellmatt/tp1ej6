@@ -6,8 +6,8 @@ import Item from "./Item";
 const Lista = (props) => {
   return (
     <ListGroup>
-      {props.arregloColor.map((color, posicion) => (
-        <Item key={posicion} nombreColor={color} borrarColor={props.borrarColor}></Item>
+      {props.color.map((color, _id) => (
+        <Item key={_id} nombreColor={color.nombreColor} setColor={props.setColor} id={color}></Item>
       ))}
     </ListGroup>
   );
