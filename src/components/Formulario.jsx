@@ -17,7 +17,7 @@ console.log(color)
       nombreColor: "",
     },
   });
-  // const navegacion = useNavigate();
+
 
   const onSubmit = (datos) => {
     crearColorApi(datos).then((respuesta) => {
